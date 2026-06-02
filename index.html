@@ -123,7 +123,34 @@ body {
   border: 1px solid var(--gray-200);
   border-radius: var(--radius-lg);
   padding: 1.5rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
+}
+.period-block {
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-lg);
+  margin-bottom: 1rem;
+  overflow: hidden;
+}
+.period-block-header {
+  background: var(--navy-light);
+  border-bottom: 1px solid #c4d0e8;
+  padding: 10px 16px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.period-block-title {
+  font-size: 12px; font-weight: 600;
+  color: var(--navy); text-transform: uppercase; letter-spacing: 0.07em;
+}
+.same-as-prev {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 12px; color: var(--gray-600); cursor: pointer;
+  user-select: none;
+}
+.same-as-prev input[type=checkbox] { cursor: pointer; accent-color: var(--navy); }
+.period-block-body { padding: 1rem 1.25rem; }
+.period-block-body.locked {
+  opacity: 0.5; pointer-events: none;
 }
 .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .field-full { grid-column: 1 / -1; }
@@ -378,52 +405,143 @@ select:hover { border-color: var(--gray-400); }
   <!-- TAB: SIMULADOR -->
   <div id="tab-calc" class="tab-panel active">
     <div class="section-title">Consulta de vencimento base</div>
+
+    <!-- Cargo (único) -->
     <div class="calc-card">
-      <div class="field-grid">
-        <div class="field-full">
-          <label class="field-label" for="cargo">Cargo</label>
-          <select id="cargo" onchange="onCargoChange()">
-            <option value="">Selecione o cargo...</option>
-            <option value="analista">Analista em Gestão Universitária</option>
-            <option value="assistente">Assistente em Gestão Universitária</option>
-            <option value="auxiliar">Auxiliar em Gestão Universitária</option>
-          </select>
-        </div>
-        <div>
-          <label class="field-label" for="classe">Série (classe)</label>
-          <select id="classe" onchange="onClasseChange()">
-            <option value="">Primeiro selecione o cargo</option>
-          </select>
-        </div>
-        <div>
-          <label class="field-label" for="faixa">Faixa salarial</label>
-          <select id="faixa" onchange="onFaixaChange()">
-            <option value="">Selecione a série</option>
-          </select>
-        </div>
-        <div class="field-full" id="formacao-wrap">
-          <label class="field-label" for="formacao">Formação / qualificação</label>
-          <select id="formacao">
-            <option value="">Selecione o cargo primeiro</option>
-          </select>
-        </div>
-        <div>
-          <label class="field-label" for="matriz">Matriz</label>
-          <select id="matriz">
-            <option value="">Selecione a faixa</option>
-          </select>
-        </div>
-      </div>
-      <button class="btn-calc" onclick="calcular()">
-        Calcular projeção salarial
-      </button>
-      <div class="error-bar" id="error-bar">Preencha todos os campos antes de calcular.</div>
+      <label class="field-label" for="cargo">Cargo</label>
+      <select id="cargo" onchange="onCargoChange()">
+        <option value="">Selecione o cargo...</option>
+        <option value="analista">Analista em Gestão Universitária</option>
+        <option value="assistente">Assistente em Gestão Universitária</option>
+        <option value="auxiliar">Auxiliar em Gestão Universitária</option>
+      </select>
+      <p style="font-size:12px;color:var(--gray-400);margin-top:10px;line-height:1.5;">
+        Informe o enquadramento em cada período. Se não houve progressão entre um período e o seguinte, marque "mesmo enquadramento do período anterior" para manter os campos preenchidos automaticamente.
+      </p>
     </div>
 
+    <!-- Bloco jun/2024 -->
+    <div class="period-block" id="block-2024">
+      <div class="period-block-header">
+        <span class="period-block-title">Junho de 2024</span>
+      </div>
+      <div class="period-block-body" id="body-2024">
+        <div class="field-grid">
+          <div>
+            <label class="field-label" for="classe-2024">Série (classe)</label>
+            <select id="classe-2024" onchange="onClasseChange('2024')">
+              <option value="">Selecione o cargo</option>
+            </select>
+          </div>
+          <div>
+            <label class="field-label" for="faixa-2024">Faixa salarial</label>
+            <select id="faixa-2024" onchange="onFaixaChange('2024')">
+              <option value="">Selecione a série</option>
+            </select>
+          </div>
+          <div class="field-full">
+            <label class="field-label" for="formacao-2024">Formação / qualificação</label>
+            <select id="formacao-2024">
+              <option value="">Selecione o cargo</option>
+            </select>
+          </div>
+          <div>
+            <label class="field-label" for="matriz-2024">Matriz</label>
+            <select id="matriz-2024">
+              <option value="">Selecione a faixa</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bloco jun/2025 -->
+    <div class="period-block" id="block-2025">
+      <div class="period-block-header">
+        <span class="period-block-title">Junho de 2025</span>
+        <label class="same-as-prev">
+          <input type="checkbox" id="same-2025" onchange="toggleSame('2025')" checked>
+          Mesmo enquadramento de 2024
+        </label>
+      </div>
+      <div class="period-block-body locked" id="body-2025">
+        <div class="field-grid">
+          <div>
+            <label class="field-label" for="classe-2025">Série (classe)</label>
+            <select id="classe-2025" onchange="onClasseChange('2025')">
+              <option value="">Selecione o cargo</option>
+            </select>
+          </div>
+          <div>
+            <label class="field-label" for="faixa-2025">Faixa salarial</label>
+            <select id="faixa-2025" onchange="onFaixaChange('2025')">
+              <option value="">Selecione a série</option>
+            </select>
+          </div>
+          <div class="field-full">
+            <label class="field-label" for="formacao-2025">Formação / qualificação</label>
+            <select id="formacao-2025">
+              <option value="">Selecione o cargo</option>
+            </select>
+          </div>
+          <div>
+            <label class="field-label" for="matriz-2025">Matriz</label>
+            <select id="matriz-2025">
+              <option value="">Selecione a faixa</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bloco jun/2026 -->
+    <div class="period-block" id="block-2026">
+      <div class="period-block-header">
+        <span class="period-block-title">Junho de 2026</span>
+        <label class="same-as-prev">
+          <input type="checkbox" id="same-2026" onchange="toggleSame('2026')" checked>
+          Mesmo enquadramento de 2025
+        </label>
+      </div>
+      <div class="period-block-body locked" id="body-2026">
+        <div class="field-grid">
+          <div>
+            <label class="field-label" for="classe-2026">Série (classe)</label>
+            <select id="classe-2026" onchange="onClasseChange('2026')">
+              <option value="">Selecione o cargo</option>
+            </select>
+          </div>
+          <div>
+            <label class="field-label" for="faixa-2026">Faixa salarial</label>
+            <select id="faixa-2026" onchange="onFaixaChange('2026')">
+              <option value="">Selecione a série</option>
+            </select>
+          </div>
+          <div class="field-full">
+            <label class="field-label" for="formacao-2026">Formação / qualificação</label>
+            <select id="formacao-2026">
+              <option value="">Selecione o cargo</option>
+            </select>
+          </div>
+          <div>
+            <label class="field-label" for="matriz-2026">Matriz</label>
+            <select id="matriz-2026">
+              <option value="">Selecione a faixa</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn-calc" onclick="calcular()">
+      Calcular projeção salarial
+    </button>
+    <div class="error-bar" id="error-bar">Preencha todos os campos de junho de 2024 antes de calcular.</div>
+
     <div class="result-section" id="result-section">
-      <div class="section-title">Resultado da projeção</div>
+      <div class="section-title" style="margin-top:1.5rem;">Resultado da projeção</div>
       <div class="result-header">
-        <p>Enquadramento: <strong id="res-enquad"></strong></p>
+        <p id="res-enquad-text"></p>
       </div>
       <div class="salary-grid" id="salary-grid"></div>
       <div class="plantao-card">
@@ -432,7 +550,7 @@ select:hover { border-color: var(--gray-400); }
         </div>
         <div class="plantao-grid" id="plantao-grid"></div>
       </div>
-      <p class="note">Valores de vencimento base conforme Anexos XIV, XV e XVI da LC 545/2024 — jornada de 30h semanais. O valor de mai/2024 é estimativa retroativa obtida a partir do valor de jun/2024, antes da incorporação da PARES. Consulte seu contracheque para confirmar classe, faixa e matriz.</p>
+      <p class="note">Valores de vencimento base conforme Anexos XIV, XV e XVI da LC 545/2024 — jornada de 30h semanais. O valor de mai/2024 é estimativa retroativa calculada a partir do enquadramento de jun/2024 antes da incorporação da PARES. O percentual acumulado compara jun/2026 com a estimativa de mai/2024.</p>
     </div>
   </div>
 
@@ -629,6 +747,7 @@ const DB = {
 };
 
 const FAIXAS = ["a","b","c","d","e","f","g"];
+const ANOS = ["2024","2025","2026"];
 
 function switchTab(id, btn) {
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
@@ -637,58 +756,147 @@ function switchTab(id, btn) {
   btn.classList.add('active');
 }
 
+function populateSelects(ano, cargo, serie, faixa, formacao) {
+  const cl = document.getElementById('classe-'+ano);
+  const fx = document.getElementById('faixa-'+ano);
+  const fm = document.getElementById('formacao-'+ano);
+  const mz = document.getElementById('matriz-'+ano);
+
+  cl.innerHTML = '<option value="">Selecione a série...</option>';
+  ['I','II','III','IV'].forEach(s => {
+    const o = document.createElement('option');
+    o.value = s; o.textContent = 'Série ' + s;
+    if (s === serie) o.selected = true;
+    cl.appendChild(o);
+  });
+
+  fx.innerHTML = '<option value="">Selecione a faixa...</option>';
+  if (serie) {
+    FAIXAS.forEach(f => {
+      const o = document.createElement('option');
+      o.value = f; o.textContent = 'Faixa ' + f.toUpperCase();
+      if (f === faixa) o.selected = true;
+      fx.appendChild(o);
+    });
+  }
+
+  fm.innerHTML = '<option value="">Selecione...</option>';
+  if (cargo) {
+    DB[cargo].formacoes.forEach(f => {
+      const o = document.createElement('option');
+      o.value = f; o.textContent = f;
+      if (f === formacao) o.selected = true;
+      fm.appendChild(o);
+    });
+  }
+
+  mz.innerHTML = '<option value="">Selecione a matriz...</option>';
+  if (faixa) {
+    ['I','II','III','IV'].forEach(m => {
+      const o = document.createElement('option');
+      o.value = m; o.textContent = 'Matriz ' + m;
+      mz.appendChild(o);
+    });
+  }
+}
+
+function getEnquad(ano) {
+  return {
+    serie:    document.getElementById('classe-'+ano).value,
+    faixa:    document.getElementById('faixa-'+ano).value,
+    formacao: document.getElementById('formacao-'+ano).value,
+    matriz:   document.getElementById('matriz-'+ano).value
+  };
+}
+
 function onCargoChange() {
   const cargo = document.getElementById('cargo').value;
-  const cl = document.getElementById('classe');
-  const fm = document.getElementById('formacao');
-  cl.innerHTML = '<option value="">Selecione a série...</option>';
-  document.getElementById('faixa').innerHTML = '<option value="">Selecione a série</option>';
-  document.getElementById('matriz').innerHTML = '<option value="">Selecione a faixa</option>';
-  fm.innerHTML = '<option value="">Selecione o cargo primeiro</option>';
-  if (!cargo) return;
-  ['I','II','III','IV'].forEach(s => { const o = document.createElement('option'); o.value = s; o.textContent = 'Série ' + s; cl.appendChild(o); });
-  DB[cargo].formacoes.forEach(f => { const o = document.createElement('option'); o.value = f; o.textContent = f; fm.appendChild(o); });
+  ANOS.forEach(a => populateSelects(a, cargo, '', '', ''));
+  document.getElementById('same-2025').checked = true;
+  document.getElementById('same-2026').checked = true;
+  document.getElementById('body-2025').classList.add('locked');
+  document.getElementById('body-2026').classList.add('locked');
+  document.getElementById('result-section').classList.remove('show');
 }
 
-function onClasseChange() {
-  const fx = document.getElementById('faixa');
+function onClasseChange(ano) {
+  const serie = document.getElementById('classe-'+ano).value;
+  const fx = document.getElementById('faixa-'+ano);
+  const mz = document.getElementById('matriz-'+ano);
   fx.innerHTML = '<option value="">Selecione a faixa...</option>';
-  document.getElementById('matriz').innerHTML = '<option value="">Selecione a faixa</option>';
-  FAIXAS.forEach(f => { const o = document.createElement('option'); o.value = f; o.textContent = 'Faixa ' + f.toUpperCase(); fx.appendChild(o); });
+  mz.innerHTML = '<option value="">Selecione a matriz...</option>';
+  if (!serie) return;
+  FAIXAS.forEach(f => {
+    const o = document.createElement('option');
+    o.value = f; o.textContent = 'Faixa ' + f.toUpperCase();
+    fx.appendChild(o);
+  });
 }
 
-function onFaixaChange() {
-  const mz = document.getElementById('matriz');
+function onFaixaChange(ano) {
+  const mz = document.getElementById('matriz-'+ano);
   mz.innerHTML = '<option value="">Selecione a matriz...</option>';
-  ['I','II','III','IV'].forEach(m => { const o = document.createElement('option'); o.value = m; o.textContent = 'Matriz ' + m; mz.appendChild(o); });
+  ['I','II','III','IV'].forEach(m => {
+    const o = document.createElement('option');
+    o.value = m; o.textContent = 'Matriz ' + m;
+    mz.appendChild(o);
+  });
+}
+
+function toggleSame(ano) {
+  const checked = document.getElementById('same-'+ano).checked;
+  const body = document.getElementById('body-'+ano);
+  const prevAno = ano === '2025' ? '2024' : '2025';
+  const cargo = document.getElementById('cargo').value;
+
+  if (checked) {
+    body.classList.add('locked');
+    const prev = getEnquad(prevAno);
+    populateSelects(ano, cargo, prev.serie, prev.faixa, prev.formacao);
+    const mz = document.getElementById('matriz-'+ano);
+    Array.from(mz.options).forEach(o => { if (o.value === document.getElementById('matriz-'+prevAno).value) o.selected = true; });
+  } else {
+    body.classList.remove('locked');
+  }
 }
 
 function fmt(v) { return 'R$ ' + v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
 
 function calcular() {
   const cargo = document.getElementById('cargo').value;
-  const classe = document.getElementById('classe').value;
-  const faixa = document.getElementById('faixa').value;
-  const matriz = document.getElementById('matriz').value;
-  const form = document.getElementById('formacao').value;
   const err = document.getElementById('error-bar');
   const res = document.getElementById('result-section');
 
-  if (!cargo || !classe || !faixa || !matriz || !form) {
+  const e24 = getEnquad('2024');
+  const e25 = document.getElementById('same-2025').checked ? e24 : getEnquad('2025');
+  const e26 = document.getElementById('same-2026').checked ? e25 : getEnquad('2026');
+
+  if (!cargo || !e24.serie || !e24.faixa || !e24.formacao || !e24.matriz) {
     err.classList.add('show'); res.classList.remove('show'); return;
   }
   err.classList.remove('show');
 
-  const fi = FAIXAS.indexOf(faixa);
   const d = DB[cargo].dados;
-  const v24 = d['2024'][classe][form][fi];
-  const v25 = d['2025'][classe][form][fi];
-  const v26 = d['2026'][classe][form][fi];
+  const fi24 = FAIXAS.indexOf(e24.faixa);
+  const fi25 = FAIXAS.indexOf(e25.faixa);
+  const fi26 = FAIXAS.indexOf(e26.faixa);
+
+  const v24 = d['2024'][e24.serie][e24.formacao][fi24];
+  const v25 = d['2025'][(e25.serie||e24.serie)][(e25.formacao||e24.formacao)][fi25 >= 0 ? fi25 : fi24];
+  const v26 = d['2026'][(e26.serie||e25.serie||e24.serie)][(e26.formacao||e25.formacao||e24.formacao)][fi26 >= 0 ? fi26 : fi25 >= 0 ? fi25 : fi24];
   const vRef = v24 * 0.964;
   const totalPct = ((v26 - vRef) / vRef * 100).toFixed(1);
 
-  document.getElementById('res-enquad').textContent =
-    DB[cargo].label + ' — Série ' + classe + ', Faixa ' + faixa.toUpperCase() + ', ' + form;
+  const same25 = document.getElementById('same-2025').checked;
+  const same26 = document.getElementById('same-2026').checked;
+
+  const enquadTexto = [
+    '<strong>jun/2024:</strong> ' + DB[cargo].label + ' — Série ' + e24.serie + ', Faixa ' + e24.faixa.toUpperCase() + ', ' + e24.formacao + ', Matriz ' + e24.matriz,
+    same25 ? null : '<strong>jun/2025:</strong> Série ' + e25.serie + ', Faixa ' + e25.faixa.toUpperCase() + ', ' + e25.formacao + ', Matriz ' + (document.getElementById('matriz-2025').value || e24.matriz),
+    same26 ? null : '<strong>jun/2026:</strong> Série ' + e26.serie + ', Faixa ' + e26.faixa.toUpperCase() + ', ' + e26.formacao + ', Matriz ' + (document.getElementById('matriz-2026').value || e25.matriz || e24.matriz)
+  ].filter(Boolean).join('<br>');
+
+  document.getElementById('res-enquad-text').innerHTML = enquadTexto;
 
   const cards = [
     { period: 'mai/2024', value: fmt(vRef), delta: 'Referência base (est.)' },
