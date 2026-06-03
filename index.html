@@ -264,6 +264,49 @@ select:hover { border-color: var(--gray-400); }
   color: var(--gray-600); text-transform: uppercase;
   letter-spacing: 0.06em; margin-bottom: 10px;
 }
+
+.ganho-real-card {
+  background: var(--navy-light);
+  border: 1px solid #c4d0e8;
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  margin-top: 10px;
+}
+.ganho-real-title {
+  font-size: 12px; font-weight: 600;
+  color: var(--navy); text-transform: uppercase;
+  letter-spacing: 0.06em; margin-bottom: 12px;
+}
+.ganho-real-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.ganho-real-item { text-align: center; }
+.ganho-real-label {
+  font-size: 11px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--navy); margin-bottom: 5px;
+}
+.ganho-real-value {
+  font-size: 18px; font-weight: 600;
+  color: var(--navy); font-family: 'IBM Plex Mono', monospace;
+}
+.ganho-real-value.highlight { color: var(--red); }
+.ganho-real-sub {
+  font-size: 11px; color: var(--gray-400); margin-top: 3px;
+}
+.ganho-real-note {
+  font-size: 11px; color: var(--gray-400);
+  line-height: 1.5; margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #c4d0e8;
+}
+
+@media (max-width: 600px) {
+  .ganho-real-grid { grid-template-columns: 1fr; }
+}
 .plantao-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; }
 .plantao-item { text-align: center; }
 .plantao-label { font-size: 11px; color: var(--gray-400); }
@@ -533,6 +576,28 @@ select:hover { border-color: var(--gray-400); }
         <div class="plantao-grid" id="plantao-grid"></div>
       </div>
       <p class="note">Valores de vencimento base conforme Anexos XIV, XV e XVI da LC 545/2024 — jornada de 30h semanais. O valor de mai/2024 corresponde à grade vigente antes da LC 545/2024, anterior à incorporação da PARES. Os valores de jun/2024, jun/2025 e jun/2026 são os valores oficiais fixados nos Anexos da LC 545/2024. O percentual acumulado compara jun/2026 com mai/2024.</p>
+
+      <div class="ganho-real-card" id="ganho-real-block">
+        <div class="ganho-real-title">Ganho real — excluídas as verbas incorporadas</div>
+        <div class="ganho-real-grid">
+          <div class="ganho-real-item">
+            <div class="ganho-real-label">Remuneração total mai/2024</div>
+            <div class="ganho-real-value" id="gr-base"></div>
+            <div class="ganho-real-sub">Venc. base + PARES + Perigo Laboral</div>
+          </div>
+          <div class="ganho-real-item">
+            <div class="ganho-real-label">Vencimento base jun/2026</div>
+            <div class="ganho-real-value" id="gr-v26"></div>
+            <div class="ganho-real-sub">Conforme Anexo XVI — LC 545/2024</div>
+          </div>
+          <div class="ganho-real-item">
+            <div class="ganho-real-label">Ganho real acumulado</div>
+            <div class="ganho-real-value highlight" id="gr-pct"></div>
+            <div class="ganho-real-sub">Sobre a remuneração total de mai/2024</div>
+          </div>
+        </div>
+        <div class="ganho-real-note" id="gr-note"></div>
+      </div>
     </div>
   </div>
 
@@ -903,6 +968,21 @@ function calcular() {
   document.getElementById('plantao-grid').innerHTML = Object.keys(p).map(function(k) {
     return '<div class="plantao-item"><div class="plantao-label">'+k+'</div><div class="plantao-val">'+p[k]+'</div></div>';
   }).join('');
+
+  // Ganho real — exclui PARES e Perigo Laboral
+  var PARES  = {analista: 800, assistente: 600, auxiliar: 400};
+  var PERIGO = 480;
+  var totalMai2024 = vRef + PARES[cargo] + PERIGO;
+  var ganhoRealPct = ((v26 - totalMai2024) / totalMai2024 * 100).toFixed(1);
+
+  document.getElementById('gr-base').textContent = fmt(totalMai2024);
+  document.getElementById('gr-v26').textContent  = fmt(v26);
+  document.getElementById('gr-pct').textContent  = (ganhoRealPct > 0 ? '+' : '') + ganhoRealPct + '%';
+  document.getElementById('gr-note').innerHTML   =
+    'PARES incorporada em jun/2024: R$ ' + PARES[cargo].toFixed(2).replace('.',',') +
+    ' &nbsp;|&nbsp; Perigo Laboral incorporado em jun/2026: R$ 480,00' +
+    ' &nbsp;|&nbsp; Total de verbas incorporadas: R$ ' + (PARES[cargo] + PERIGO).toFixed(2).replace('.',',') +
+    '<br>Fundamento: art. 13, §§ 1º e 2º, LC 545/2024.';
 
   res.classList.add('show');
   res.scrollIntoView({behavior:'smooth', block:'nearest'});
