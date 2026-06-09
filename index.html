@@ -304,8 +304,46 @@ select:hover { border-color: var(--gray-400); }
   border-top: 1px solid #c4d0e8;
 }
 
+.pcv-alert {
+  display: none;
+  background: var(--red-light);
+  border: 1.5px solid var(--red);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  margin-top: 10px;
+}
+.pcv-alert.show { display: block; }
+.pcv-alert-title {
+  font-size: 12px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--red-dark); margin-bottom: 8px;
+}
+.pcv-alert-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.pcv-alert-item { }
+.pcv-alert-label {
+  font-size: 11px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.05em;
+  color: var(--red-dark); margin-bottom: 3px;
+}
+.pcv-alert-value {
+  font-size: 20px; font-weight: 600;
+  color: var(--red-dark); font-family: 'IBM Plex Mono', monospace;
+}
+.pcv-alert-note {
+  font-size: 12px; color: var(--gray-600);
+  line-height: 1.6;
+  border-top: 1px solid #f5b3bc;
+  padding-top: 8px; margin-top: 4px;
+}
+
 @media (max-width: 600px) {
   .ganho-real-grid { grid-template-columns: 1fr; }
+  .pcv-alert-grid  { grid-template-columns: 1fr; }
 }
 .plantao-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; }
 .plantao-item { text-align: center; }
@@ -403,6 +441,113 @@ select:hover { border-color: var(--gray-400); }
 }
 .law-desc { color: var(--gray-600); font-size: 12px; }
 
+/* USER GUIDE */
+.user-guide {
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-lg);
+  margin-bottom: 1rem;
+  overflow: hidden;
+}
+.user-guide-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 16px;
+  cursor: pointer;
+  user-select: none;
+  background: var(--gray-50);
+  border-bottom: 1px solid transparent;
+  transition: background 0.12s;
+}
+.user-guide-header:hover { background: var(--gray-100); }
+.user-guide-header.open { border-bottom-color: var(--gray-200); }
+.user-guide-header-left {
+  display: flex; align-items: center; gap: 10px;
+}
+.user-guide-badge {
+  background: var(--navy);
+  color: #fff;
+  font-size: 10px; font-weight: 600;
+  padding: 2px 8px; border-radius: 10px;
+  text-transform: uppercase; letter-spacing: 0.06em;
+}
+.user-guide-header h3 {
+  font-size: 13px; font-weight: 600;
+  color: var(--navy); margin: 0;
+}
+.user-guide-chev {
+  width: 16px; height: 16px;
+  fill: var(--gray-400);
+  transition: transform 0.2s; flex-shrink: 0;
+}
+.user-guide-header.open .user-guide-chev { transform: rotate(180deg); }
+.user-guide-body {
+  display: none;
+  padding: 1.25rem 1.5rem;
+}
+.user-guide-body.open { display: block; }
+.guide-steps { counter-reset: steps; }
+.guide-step {
+  display: flex; gap: 14px;
+  margin-bottom: 1rem;
+}
+.guide-step:last-of-type { margin-bottom: 0; }
+.guide-step-num {
+  width: 24px; height: 24px;
+  background: var(--navy);
+  color: #fff;
+  border-radius: 50%;
+  font-size: 11px; font-weight: 600;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 1px;
+}
+.guide-step-content h4 {
+  font-size: 13px; font-weight: 600;
+  color: var(--gray-900); margin: 0 0 4px;
+}
+.guide-step-content p {
+  font-size: 13px; color: var(--gray-600);
+  line-height: 1.65; margin: 0;
+}
+.guide-alert {
+  background: var(--red-light);
+  border-left: 3px solid var(--red);
+  padding: 10px 14px;
+  margin-top: 1rem;
+  font-size: 13px; color: var(--gray-900); line-height: 1.6;
+}
+.guide-alert strong { color: var(--red-dark); font-weight: 600; }
+
+/* VINCULO SELECTOR */
+.vinculo-wrap {
+  margin-top: 14px;
+  display: none;
+}
+.vinculo-wrap.show { display: block; }
+.vinculo-label-title {
+  font-size: 11px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.07em;
+  color: var(--gray-600); margin-bottom: 8px;
+  display: block;
+}
+.vinculo-options {
+  display: flex; flex-direction: column; gap: 7px;
+}
+.vinculo-opt {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  user-select: none;
+}
+.vinculo-opt:hover { border-color: var(--navy-mid); background: var(--navy-light); }
+.vinculo-opt input[type=radio] { margin-top: 2px; accent-color: var(--navy); cursor: pointer; flex-shrink: 0; }
+.vinculo-opt.selected { border-color: var(--navy); background: var(--navy-light); }
+.vinculo-opt-text { }
+.vinculo-opt-title { font-size: 13px; font-weight: 600; color: var(--gray-900); }
+.vinculo-opt-desc  { font-size: 12px; color: var(--gray-400); margin-top: 1px; line-height: 1.4; }
+
 /* FOOTER */
 .site-footer {
   background: var(--navy-dark);
@@ -449,6 +594,45 @@ select:hover { border-color: var(--gray-400); }
   <div id="tab-calc" class="tab-panel active">
     <div class="section-title">Consulta de vencimento base</div>
 
+    <!-- Guia do usuário -->
+    <div class="user-guide" id="user-guide">
+      <div class="user-guide-header" onclick="toggleGuide()">
+        <div class="user-guide-header-left">
+          <span class="user-guide-badge">Como usar</span>
+          <h3>Guia do usuário — leia antes de preencher</h3>
+        </div>
+        <svg class="user-guide-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="user-guide-body" id="user-guide-body">
+        <div class="guide-steps">
+          <div class="guide-step">
+            <div class="guide-step-num">1</div>
+            <div class="guide-step-content">
+              <h4>Reúna os contracheques</h4>
+              <p>Separe os contracheques de <strong>junho de 2024</strong>, <strong>junho de 2025</strong> e <strong>maio de 2026</strong>. O mês de maio de 2026 é utilizado como referência para o período de junho de 2026 porque a incorporação das gratificações ocorre em junho, e o contracheque deste mês pode ainda não estar disponível ao servidor no momento da consulta.</p>
+            </div>
+          </div>
+          <div class="guide-step">
+            <div class="guide-step-num">2</div>
+            <div class="guide-step-content">
+              <h4>Identifique o enquadramento em cada contracheque</h4>
+              <p>No cabeçalho do contracheque, localize o quadro de dados funcionais. Ali constam os campos <strong>Tab/Matriz</strong>, <strong>Classe</strong> e <strong>Faixa</strong>. Esses três dados correspondem, respectivamente, ao campo "Formação / Qualificação / Matriz", ao campo "Classe" e ao campo "Faixa salarial" do sistema.</p>
+            </div>
+          </div>
+          <div class="guide-step">
+            <div class="guide-step-num">3</div>
+            <div class="guide-step-content">
+              <h4>Insira os dados em cada período</h4>
+              <p>Preencha os campos do bloco <strong>Junho de 2024</strong> com os dados do contracheque correspondente. Para os períodos seguintes, se não houve progressão de classe ou faixa, mantenha marcada a opção <em>"Mesmo enquadramento do período anterior"</em> — os campos serão preenchidos automaticamente. Caso tenha havido progressão, desmarque a opção e informe o novo enquadramento.</p>
+            </div>
+          </div>
+        </div>
+        <div class="guide-alert">
+          <strong>Importante:</strong> Esta calculadora apura exclusivamente o <strong>vencimento base</strong> do servidor, conforme as tabelas dos Anexos XIV, XV e XVI da Lei Complementar nº 545/2024. O resultado não compreende quaisquer outras verbas remuneratórias.
+        </div>
+      </div>
+    </div>
+
     <!-- Cargo (único) -->
     <div class="calc-card">
       <label class="field-label" for="cargo">Cargo</label>
@@ -458,6 +642,34 @@ select:hover { border-color: var(--gray-400); }
         <option value="assistente">Assistente em Gestão Universitária</option>
         <option value="auxiliar">Auxiliar em Gestão Universitária</option>
       </select>
+
+      <div class="vinculo-wrap" id="vinculo-wrap">
+        <span class="vinculo-label-title">Vínculo funcional</span>
+        <div class="vinculo-options">
+          <label class="vinculo-opt" id="vopt-hospitalar">
+            <input type="radio" name="vinculo" value="hospitalar" onchange="onVinculoChange(this)">
+            <div class="vinculo-opt-text">
+              <div class="vinculo-opt-title">Servidor do complexo hospitalar</div>
+              <div class="vinculo-opt-desc">Recebia Perigo Laboral antes da incorporação</div>
+            </div>
+          </label>
+          <label class="vinculo-opt" id="vopt-reitoria">
+            <input type="radio" name="vinculo" value="reitoria" onchange="onVinculoChange(this)">
+            <div class="vinculo-opt-text">
+              <div class="vinculo-opt-title">Servidor da reitoria ou faculdades</div>
+              <div class="vinculo-opt-desc">Não recebia Perigo Laboral — verba incorporada ao vencimento base em jun/2026</div>
+            </div>
+          </label>
+          <label class="vinculo-opt" id="vopt-aposentado">
+            <input type="radio" name="vinculo" value="aposentado" onchange="onVinculoChange(this)">
+            <div class="vinculo-opt-text">
+              <div class="vinculo-opt-title">Servidor aposentado</div>
+              <div class="vinculo-opt-desc">Não recebia Perigo Laboral — incorporação beneficia os proventos nos termos do art. 19, LC 545/2024</div>
+            </div>
+          </label>
+        </div>
+      </div>
+
       <p style="font-size:12px;color:var(--gray-400);margin-top:10px;line-height:1.5;">
         Informe o enquadramento em cada período. Se não houve progressão entre um período e o seguinte, marque "mesmo enquadramento do período anterior" para manter os campos preenchidos automaticamente.
       </p>
@@ -471,7 +683,7 @@ select:hover { border-color: var(--gray-400); }
       <div class="period-block-body" id="body-2024">
         <div class="field-grid">
           <div>
-            <label class="field-label" for="classe-2024">Série (classe)</label>
+            <label class="field-label" for="classe-2024">Classe</label>
             <select id="classe-2024" onchange="onClasseChange('2024')">
               <option value="">Selecione o cargo</option>
             </select>
@@ -504,7 +716,7 @@ select:hover { border-color: var(--gray-400); }
       <div class="period-block-body locked" id="body-2025">
         <div class="field-grid">
           <div>
-            <label class="field-label" for="classe-2025">Série (classe)</label>
+            <label class="field-label" for="classe-2025">Classe</label>
             <select id="classe-2025" onchange="onClasseChange('2025')">
               <option value="">Selecione o cargo</option>
             </select>
@@ -537,7 +749,7 @@ select:hover { border-color: var(--gray-400); }
       <div class="period-block-body locked" id="body-2026">
         <div class="field-grid">
           <div>
-            <label class="field-label" for="classe-2026">Série (classe)</label>
+            <label class="field-label" for="classe-2026">Classe</label>
             <select id="classe-2026" onchange="onClasseChange('2026')">
               <option value="">Selecione o cargo</option>
             </select>
@@ -597,6 +809,23 @@ select:hover { border-color: var(--gray-400); }
           </div>
         </div>
         <div class="ganho-real-note" id="gr-note"></div>
+
+        <div class="pcv-alert" id="pcv-alert">
+          <div class="pcv-alert-title">Atenção — Direito à Parcela Complementar de Vencimento (PCV)</div>
+          <div class="pcv-alert-grid">
+            <div class="pcv-alert-item">
+              <div class="pcv-alert-label">Ganho real apurado</div>
+              <div class="pcv-alert-value" id="pcv-ganho"></div>
+            </div>
+            <div class="pcv-alert-item">
+              <div class="pcv-alert-label">Valor estimado da PCV</div>
+              <div class="pcv-alert-value" id="pcv-valor"></div>
+            </div>
+          </div>
+          <div class="pcv-alert-note">
+            O ganho real apurado é inferior ao piso de 16,3% assegurado pelo art. 14, <em>caput</em>, da LC 545/2024. O servidor tem direito à PCV como vantagem pessoal nominalmente expressa no contracheque, correspondente à diferença entre o vencimento base de jun/2026 e o mínimo garantido de 16,3% sobre a remuneração total de mai/2024. Caso a PCV não conste no contracheque de junho de 2026, o servidor deve requerer o pagamento junto à administração da UPE. O valor acima é estimado — o valor exato pode diferir nos casos de afastamento legal em maio ou junho de 2024, nos termos do art. 14, § 3º, LC 545/2024.
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -712,6 +941,7 @@ select:hover { border-color: var(--gray-400); }
 
 <footer class="site-footer">
   <strong>SINDUPE</strong> — Sindicato dos Servidores da Universidade de Pernambuco &nbsp;|&nbsp; Fundamentado na Lei Complementar nº 545, de 2 de setembro de 2024
+  <br>Sistema desenvolvido por <strong>Luis Guilherme Veríssimo</strong> — luisguilhermeverissimo@outlook.pt &nbsp;|&nbsp; Todos os direitos reservados
 </footer>
 
 <script>
@@ -834,15 +1064,28 @@ function switchTab(id, btn) {
   btn.classList.add('active');
 }
 
+function toggleGuide() {
+  var hdr = document.querySelector('.user-guide-header');
+  var body = document.getElementById('user-guide-body');
+  var isOpen = body.classList.contains('open');
+  if (isOpen) {
+    body.classList.remove('open');
+    hdr.classList.remove('open');
+  } else {
+    body.classList.add('open');
+    hdr.classList.add('open');
+  }
+}
+
 function populateSelects(ano, cargo, serie, faixa, formacao) {
   var cl = document.getElementById('classe-'+ano);
   var fx = document.getElementById('faixa-'+ano);
   var fm = document.getElementById('formacao-'+ano);
 
-  cl.innerHTML = '<option value="">Selecione a serie...</option>';
+  cl.innerHTML = '<option value="">Selecione a classe...</option>';
   ['I','II','III','IV'].forEach(function(s) {
     var o = document.createElement('option');
-    o.value = s; o.textContent = 'Serie ' + s;
+    o.value = s; o.textContent = 'Classe ' + s;
     if (s === serie) o.selected = true;
     cl.appendChild(o);
   });
@@ -876,8 +1119,29 @@ function getEnquad(ano) {
   };
 }
 
+function onVinculoChange(radio) {
+  ['hospitalar','reitoria','aposentado'].forEach(function(v) {
+    var el = document.getElementById('vopt-'+v);
+    if (el) el.classList.remove('selected');
+  });
+  var parent = radio.closest ? radio.closest('.vinculo-opt') : radio.parentNode;
+  if (parent) parent.classList.add('selected');
+  document.getElementById('result-section').classList.remove('show');
+}
+
 function onCargoChange() {
   var cargo = document.getElementById('cargo').value;
+  // Show vinculo selector when cargo is selected
+  var vw = document.getElementById('vinculo-wrap');
+  if (cargo) { vw.classList.add('show'); }
+  else { vw.classList.remove('show'); }
+  // Reset vinculo selection
+  var radios = document.querySelectorAll('input[name="vinculo"]');
+  radios.forEach(function(r) { r.checked = false; });
+  ['hospitalar','reitoria','aposentado'].forEach(function(v) {
+    var el = document.getElementById('vopt-'+v);
+    if (el) el.classList.remove('selected');
+  });
   ANOS.forEach(function(a) { populateSelects(a, cargo, '', '', ''); });
   document.getElementById('same-2025').checked = true;
   document.getElementById('same-2026').checked = true;
@@ -898,6 +1162,7 @@ function onClasseChange(ano) {
   });
 }
 
+
 function toggleSame(ano) {
   var checked = document.getElementById('same-'+ano).checked;
   var body = document.getElementById('body-'+ano);
@@ -916,6 +1181,10 @@ function fmt(v) { return 'R$ ' + v.toLocaleString('pt-BR', {minimumFractionDigit
 
 function calcular() {
   var cargo = document.getElementById('cargo').value;
+  var vinculo = '';
+  var radios = document.querySelectorAll('input[name="vinculo"]');
+  radios.forEach(function(r) { if (r.checked) vinculo = r.value; });
+
   var err = document.getElementById('error-bar');
   var res = document.getElementById('result-section');
 
@@ -923,8 +1192,10 @@ function calcular() {
   var e25 = document.getElementById('same-2025').checked ? e24 : getEnquad('2025');
   var e26 = document.getElementById('same-2026').checked ? e25 : getEnquad('2026');
 
-  if (!cargo || !e24.serie || !e24.faixa || !e24.formacao) {
-    err.classList.add('show'); res.classList.remove('show'); return;
+  if (!cargo || !vinculo || !e24.serie || !e24.faixa || !e24.formacao) {
+    err.classList.add('show'); res.classList.remove('show');
+    err.textContent = (!cargo || !vinculo) ? 'Selecione o cargo e o vinculo funcional antes de calcular.' : 'Preencha todos os campos de junho de 2024 antes de calcular.';
+    return;
   }
   err.classList.remove('show');
 
@@ -948,9 +1219,18 @@ function calcular() {
   var same25 = document.getElementById('same-2025').checked;
   var same26 = document.getElementById('same-2026').checked;
 
-  var linhas = ['<strong>mai-jun/2024:</strong> ' + DB[cargo].label + ' - Serie ' + e24.serie + ', Faixa ' + e24.faixa.toUpperCase() + ', ' + (LABELS[cargo].formacoes[e24.formacao] || e24.formacao)];
-  if (!same25) linhas.push('<strong>jun/2025:</strong> Serie ' + e25.serie + ', Faixa ' + e25.faixa.toUpperCase() + ', ' + (LABELS[cargo].formacoes[e25.formacao] || e25.formacao));
-  if (!same26) linhas.push('<strong>jun/2026:</strong> Serie ' + e26.serie + ', Faixa ' + e26.faixa.toUpperCase() + ', ' + (LABELS[cargo].formacoes[e26.formacao] || e26.formacao));
+  var vinculoLabels = {
+    hospitalar: 'Servidor do complexo hospitalar',
+    reitoria:   'Servidor da reitoria ou faculdades',
+    aposentado: 'Servidor aposentado'
+  };
+
+  var linhas = [
+    '<strong>Vinculo:</strong> ' + vinculoLabels[vinculo],
+    '<strong>mai-jun/2024:</strong> ' + DB[cargo].label + ' — Classe ' + e24.serie + ', Faixa ' + e24.faixa.toUpperCase() + ', ' + (LABELS[cargo].formacoes[e24.formacao] || e24.formacao)
+  ];
+  if (!same25) linhas.push('<strong>jun/2025:</strong> Classe ' + e25.serie + ', Faixa ' + e25.faixa.toUpperCase() + ', ' + (LABELS[cargo].formacoes[e25.formacao] || e25.formacao));
+  if (!same26) linhas.push('<strong>jun/2026:</strong> Classe ' + e26.serie + ', Faixa ' + e26.faixa.toUpperCase() + ', ' + (LABELS[cargo].formacoes[e26.formacao] || e26.formacao));
   document.getElementById('res-enquad-text').innerHTML = linhas.join('<br>');
 
   var cards = [
@@ -969,20 +1249,41 @@ function calcular() {
     return '<div class="plantao-item"><div class="plantao-label">'+k+'</div><div class="plantao-val">'+p[k]+'</div></div>';
   }).join('');
 
-  // Ganho real — exclui PARES e Perigo Laboral
+  // Ganho real — PERIGO condicional ao vinculo
   var PARES  = {analista: 800, assistente: 600, auxiliar: 400};
-  var PERIGO = 480;
-  var totalMai2024 = vRef + PARES[cargo] + PERIGO;
-  var ganhoRealPct = ((v26 - totalMai2024) / totalMai2024 * 100).toFixed(1);
+  var PERIGO = (vinculo === 'hospitalar') ? 480 : 0;
+  var totalMai2024  = vRef + PARES[cargo] + PERIGO;
+  var ganhoRealPct  = ((v26 - totalMai2024) / totalMai2024 * 100);
+  var minimoGarantido = totalMai2024 * 1.163;
+  var pcvEstimada   = minimoGarantido - v26;
 
   document.getElementById('gr-base').textContent = fmt(totalMai2024);
   document.getElementById('gr-v26').textContent  = fmt(v26);
-  document.getElementById('gr-pct').textContent  = (ganhoRealPct > 0 ? '+' : '') + ganhoRealPct + '%';
-  document.getElementById('gr-note').innerHTML   =
-    'PARES incorporada em jun/2024: R$ ' + PARES[cargo].toFixed(2).replace('.',',') +
-    ' &nbsp;|&nbsp; Perigo Laboral incorporado em jun/2026: R$ 480,00' +
-    ' &nbsp;|&nbsp; Total de verbas incorporadas: R$ ' + (PARES[cargo] + PERIGO).toFixed(2).replace('.',',') +
-    '<br>Fundamento: art. 13, §§ 1º e 2º, LC 545/2024.';
+  document.getElementById('gr-pct').textContent  = (ganhoRealPct > 0 ? '+' : '') + ganhoRealPct.toFixed(1) + '%';
+
+  var grNote = '';
+  if (vinculo === 'hospitalar') {
+    grNote = 'PARES incorporada em jun/2024: R$ ' + PARES[cargo].toFixed(2).replace('.',',') +
+      ' &nbsp;|&nbsp; Perigo Laboral incorporado em jun/2026: R$ 480,00' +
+      ' &nbsp;|&nbsp; Total de verbas incorporadas: R$ ' + (PARES[cargo] + 480).toFixed(2).replace('.',',') +
+      '<br>Fundamento: art. 13, pp. 1 e 2, LC 545/2024.';
+  } else {
+    var vlabel = (vinculo === 'aposentado') ? 'Servidor aposentado' : 'Servidor da reitoria/faculdades';
+    grNote = vlabel + ': PARES incorporada em jun/2024: R$ ' + PARES[cargo].toFixed(2).replace('.',',') +
+      '. O Perigo Laboral (R$ 480,00) nao era recebido antes de jun/2026, porem foi incorporado ao vencimento base de toda a categoria pelo Anexo XVI da LC 545/2024, beneficiando os proventos e o vencimento base deste servidor.' +
+      '<br>Fundamento: art. 13, pp. 1 e 2, e art. 19, LC 545/2024.';
+  }
+  document.getElementById('gr-note').innerHTML = grNote;
+
+  // PCV — verifica se ganho real e inferior a 16,3%
+  var pcvAlert = document.getElementById('pcv-alert');
+  if (ganhoRealPct < 16.3) {
+    document.getElementById('pcv-ganho').textContent = ganhoRealPct.toFixed(1) + '%';
+    document.getElementById('pcv-valor').textContent = fmt(pcvEstimada);
+    pcvAlert.classList.add('show');
+  } else {
+    pcvAlert.classList.remove('show');
+  }
 
   res.classList.add('show');
   res.scrollIntoView({behavior:'smooth', block:'nearest'});
