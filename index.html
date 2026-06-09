@@ -795,7 +795,7 @@ select:hover { border-color: var(--gray-400); }
           <div class="ganho-real-item">
             <div class="ganho-real-label">Remuneração total mai/2024</div>
             <div class="ganho-real-value" id="gr-base"></div>
-            <div class="ganho-real-sub">Venc. base + PARES + Perigo Laboral</div>
+            <div class="ganho-real-sub" id="gr-base-sub">Venc. base + PARES + Perigo Laboral</div>
           </div>
           <div class="ganho-real-item">
             <div class="ganho-real-label">Vencimento base jun/2026</div>
@@ -1258,6 +1258,7 @@ function calcular() {
   var pcvEstimada   = minimoGarantido - v26;
 
   document.getElementById('gr-base').textContent = fmt(totalMai2024);
+  document.getElementById('gr-base-sub').textContent = (vinculo === 'hospitalar') ? 'Venc. base + PARES + Perigo Laboral' : 'Venc. base + PARES';
   document.getElementById('gr-v26').textContent  = fmt(v26);
   document.getElementById('gr-pct').textContent  = (ganhoRealPct > 0 ? '+' : '') + ganhoRealPct.toFixed(1) + '%';
 
